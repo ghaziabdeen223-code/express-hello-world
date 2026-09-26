@@ -2,13 +2,6 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 app.get('/', (req,res)=>{
-res.send(`
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ghazi PRO - #1 Free Image Converter Worldwide</title>
-<meta name="description" content="Free online image converter to JPG PNG WEBP AVIF. Fast, secure, no upload needed.">
-<meta name="keywords" content="image converter, jpg to png, webp converter, free image tool">
-<style>
-body{margin:0;background:#0a0a0a;color:#fff;font-family:Arial, sans-serif;text-align:center}
-.ad{background:#1a1a1a;padding:12px;font-size:11px;color:#888;border:1px dashed #333;margin:8px auto;max-width:700px}
-.card{background:#181818;max-width:450px;margin:20px auto;padding:24px;border-radius:20px}
-select,button
+res.send(`<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ghazi PRO Global</title><style>body{margin:0;background:#0a0a0a;color:#fff;font-family:Arial;text-align:center}.ad{background:#1a1a1a;padding:10px;color:#888;border:1px dashed #333;margin:8px auto;max-width:700px}.card{background:#181818;max-width:450px;margin:20px auto;padding:24px;border-radius:20px}button,select,input{width:100%;padding:14px;margin:7px 0;border-radius:12px;border:none}button{font-weight:bold;cursor:pointer}.free{background:#fff;color:#000}.vip{background:gold;color:#000}#pv{max-width:100%;border-radius:12px;display:none}</style></head><body><div class="ad">TOP AD - Paste AdSense Here</div><div class="card"><h1>Ghazi PRO Global</h1><p>Free Image Converter Worldwide</p><input type="file" id="up" accept="image/*"><select id="fm"><option value="jpeg">JPG</option><option value="png">PNG</option><option value="webp">WEBP</option></select><img id="pv"><canvas id="cv" style="display:none"></canvas><p id="inf"></p><button id="fr" class="free" style="display:none">FREE Download</button><button id="pr" class="vip" style="display:none">PRO Download $2.99</button></div><div class="ad">BOTTOM AD</div><script>const up=document.getElementById('up'),cv=document.getElementById('cv'),pv=document.getElementById('pv'),fr=document.getElementById('fr'),pr=document.getElementById('pr'),fm=document.getElementById('fm'),inf=document.getElementById('inf');let ctx=cv.getContext('2d'),cur=null;up.onchange=e=>{let f=e.target.files[0];let im=new Image();im.onload=()=>{cur=im;cv.width=im.width;cv.height=im.height;ctx.drawImage(im,0,0);ctx.font='30px Arial';ctx.fillStyle='rgba(255,255,255,0.3)';ctx.fillText('Ghazi PRO',20,40);pv.src=cv.toDataURL('image/'+fm.value,0.8);pv.style.display='block';fr.style.display='block';pr.style.display='block';inf.innerText='Ready '+im.width+'x'+im.height};im.src=URL.createObjectURL(f)};fr.onclick=()=>{let a=document.createElement('a');a.download='ghazi.'+fm.value;a.href=cv.toDataURL('image/'+fm.value,0.8);a.click()};pr.onclick=()=>{cv.width=cur.width;cv.height=cur.height;ctx.drawImage(cur,0,0);let a=document.createElement('a');a.download='ghazi-pro.'+fm.value;a.href=cv.toDataURL('image/'+fm.value,0.95);a.click();alert('PayPal.me/yourname $2.99 for VIP')};<\/script></body></html>`);
+});
+app.listen(port,()=>console.log('Live'));
