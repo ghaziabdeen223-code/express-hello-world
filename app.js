@@ -1,61 +1,58 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
-app.get("/", (req, res) => res.type('html').send(html));
+app.get('/', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghazi - محول الصور العالمي</title>
+<style>
+body{font-family:sans-serif; background:#0f0f0f; color:#fff; text-align:center; padding:20px}
+.card{background:#1e1e1e; padding:25px; border-radius:20px; max-width:400px; margin:auto}
+input{margin:15px 0}
+button{padding:12px 25px; background:#fff; color:#000; border:none; border-radius:10px; font-weight:bold; cursor:pointer; display:none}
+#preview{max-width:100%; margin-top:15px; border-radius:10px; display:none}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📸 Ghazi Converter</h1>
+<p>حول أي صورة لـ JPG بضغطة</p>
+<input type="file" id="upload" accept="image/*">
+<img id="preview">
+<br><br>
+<button id="download">تحميل JPG ⬇️</button>
+<p id="msg"></p>
+</div>
+<canvas id="canvas" style="display:none"></canvas>
+<script>
+const up=document.getElementById('upload'), cv=document.getElementById('canvas'), dl=document.getElementById('download'), pv=document.getElementById('preview'), msg=document.getElementById('msg');
+up.onchange=e=>{
+  const file=e.target.files[0];
+  if(!file)return;
+  const img=new Image();
+  img.onload=()=>{
+    cv.width=img.width; cv.height=img.height;
+    cv.getContext('2d').drawImage(img,0,0);
+    pv.src=cv.toDataURL('image/jpeg',0.8);
+    pv.style.display='block';
+    dl.style.display='inline-block';
+    msg.innerText='جاهز للتحميل ✅';
+  };
+  img.src=URL.createObjectURL(file);
+}
+dl.onclick=()=>{
+  const a=document.createElement('a');
+  a.download='ghazi-'+Date.now()+'.jpg';
+  a.href=cv.toDataURL('image/jpeg',0.9);
+  a.click();
+}
+</script>
+</body>
+</html>`);
+});
 
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-server.keepAliveTimeout = 120 * 1000;
-server.headersTimeout = 120 * 1000;
-
-const html = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello from Render!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          disableForReducedMotion: true
-        });
-      }, 500);
-    </script>
-    <style>
-      @import url("https://p.typekit.net/p.css?s=1&k=vnd5zic&ht=tk&f=39475.39476.39477.39478.39479.39480.39481.39482&a=18673890&app=typekit&e=css");
-      @font-face {
-        font-family: "neo-sans";
-        src: url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-        font-style: normal;
-        font-weight: 700;
-      }
-      html {
-        font-family: neo-sans;
-        font-weight: 700;
-        font-size: calc(62rem / 16);
-      }
-      body {
-        background: white;
-      }
-      section {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      Hello from Render!
-    </section>
-  </body>
-</html>
-`
+app.listen(port, ()=>console.log('Ghazi Image Ready'));
