@@ -2,60 +2,26 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type('html').send(html));
-
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-server.keepAliveTimeout = 120 * 1000;
-server.headersTimeout = 120 * 1000;
-
-const html = `
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Hello from Render!</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <script>
-      setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          disableForReducedMotion: true
-        });
-      }, 500);
-    </script>
-    <style>
-      @import url("https://p.typekit.net/p.css?s=1&k=vnd5zic&ht=tk&f=39475.39476.39477.39478.39479.39480.39481.39482&a=18673890&app=typekit&e=css");
-      @font-face {
-        font-family: "neo-sans";
-        src: url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"), url("https://use.typekit.net/af/00ac0a/00000000000000003b9b2033/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
-        font-style: normal;
-        font-weight: 700;
-      }
-      html {
-        font-family: neo-sans;
-        font-weight: 700;
-        font-size: calc(62rem / 16);
-      }
-      body {
-        background: white;
-      }
-      section {
-        border-radius: 1em;
-        padding: 1em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-      }
-    </style>
-  </head>
-  <body>
-    <section>
-      Hello from Render!
-    </section>
-  </body>
-</html>
-`
+app.get("/", (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لعبة الحلويات</title>
+<style>
+body{margin:0;background:linear-gradient(#ff9ec4,#ffd6e7);display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:sans-serif}
+.box{background:white;padding:15px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);text-align:center;width:340px}
+canvas{background:#fff0f5;border-radius:15px;touch-action:none}
+button{background:#ff4081;color:white;border:none;padding:10px 20px;border-radius:20px;font-size:18px;margin-top:10px}
+</style></head><body>
+<div class="box"><h2>🍬 لعبة الحلويات 🍭</h2><canvas id="c" width="300" height="400"></canvas><p>النقاط: <span id="s">0</span></p><button onclick="location.reload()">اعادة</button></div>
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');let score=0;let candies=[];
+const colors=['#ff4081','#ffeb3b','#4caf50','#2196f3','#ff9800'];
+function add(){candies.push({x:Math.random()*270+15,y:-20,r:15,c:colors[Math.floor(Math.random()*5)],v:2+Math.random()*3})}
+function draw(){ctx.clearRect(0,0,300,400);candies.forEach((b,i)=>{ctx.fillStyle=b.c;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();b.y+=b.v;if(b.y>410)candies.splice(i,1)});requestAnimationFrame(draw)}
+canvas.addEventListener('click',e=>{let rect=canvas.getBoundingClientRect();let x=(e.clientX-rect.left)*(300/rect.width);let y=(e.clientY-rect.top)*(400/rect.height);candies.forEach((b,i)=>{if(Math.hypot(b.x-x,b.y-y)<25){candies.splice(i,1);score++;document.getElementById('s').innerText=score}})});
+setInterval(add,400);draw();
+</script></body></html>`);
+});
+const server=app.listen(port,()=>console.log("شغال"));
+server.keepAliveTimeout=120*1000;
+server.headersTimeout=120*1000;
